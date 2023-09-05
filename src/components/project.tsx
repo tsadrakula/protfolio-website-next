@@ -1,12 +1,31 @@
 "use client";
 import { useRef } from "react";
-import { projectsData } from "../../lib/data";
 import Image from "next/image";
 import { useScroll, motion, useTransform } from "framer-motion";
+import { ProjectClass } from "@/models/Projects";
+import corpcomment from "../../public/images/corpcomment.png";
+import fluidpay from "../../public/images/fluidpay.png";
+import portfolio from "../../public/images/portfolio-project.png";
 
-type ProjectsProps = (typeof projectsData)[number];
+const Project = ({ title, description, tags, imageUrl }: ProjectClass) => {
 
-const Project = ({ title, description, tags, imageUrl }: ProjectsProps) => {
+  const matchImage = (imageUrl : string) => {
+    let imageName;
+    switch (imageUrl) {
+      case "corpcomment":
+        imageName = corpcomment;
+        break;
+      case "fluidpay":
+        imageName = fluidpay;
+        break;
+      case "portfolio":
+        imageName = portfolio;
+        break;
+      default:
+        imageName = corpcomment;
+    }
+    return imageName;
+  };
   const ref = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: ref,
@@ -31,7 +50,9 @@ const Project = ({ title, description, tags, imageUrl }: ProjectsProps) => {
       >
         <div className="pt-4 pb-7 px-5 sm:pl-10 sm:pr-2 sm:pt-10 sm:max-w-[50%] flex flex-col h-full sm:group-even:ml-[18rem]">
           <h3 className="text-2xl font-semibold">{title}</h3>
-          <p className="mt-2 leading-relaxed text-gray-700 dark:text-white/70">{description}</p>
+          <p className="mt-2 leading-relaxed text-gray-700 dark:text-white/70">
+            {description}
+          </p>
           <ul className="flex flex-wrap mt-4 gap-2 sm:mt-auto">
             {tags.map((tag, index) => (
               <li
@@ -44,7 +65,7 @@ const Project = ({ title, description, tags, imageUrl }: ProjectsProps) => {
           </ul>
         </div>
         <Image
-          src={imageUrl}
+          src={matchImage(imageUrl)}
           alt="Project I worked on"
           quality={95}
           className="absolute hidden sm:block top-8 -right-40 w-[28.25rem] rounded-t-lg shadow-2xl group-even:right-[initial] group-even:-left-40

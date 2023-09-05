@@ -5,14 +5,17 @@ import SectionDivider from "@/components/section-divider";
 import Skills from "@/components/skills";
 import Experience from "@/components/experience";
 import Contact from "@/components/contact";
+import { getProjects } from "../../lib/projects-bs";
 
-export default function Home() {
+
+export default async function Home() {
+  const { projects } = await getProjects();
   return (
     <main className="flex flex-col items-center px-4">
       <Intro />
       <SectionDivider />
       <About />
-      <Projects />
+      <Projects projects={projects} />
       <Skills />
       <Experience />
       <Contact />
