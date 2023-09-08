@@ -4,26 +4,10 @@ import {
   getModelForClass,
   index,
   prop,
-  post
+  post,
 } from "@typegoose/typegoose";
 import mongoose from "mongoose";
 
-
-@post<ProjectClass>("save", function (doc) {
-  if (doc) {
-    doc.id = doc._id.toString();
-    doc._id = doc.id;
-  }
-})
-@post<ProjectClass[]>(/^find/, function (docs) {
-  // @ts-ignore
-  if (this.op === "find") {
-    docs.forEach((doc) => {
-      doc.id = doc._id.toString();
-      doc._id = doc.id;
-    });
-  }
-})
 @ModelOptions({
   schemaOptions: {
     timestamps: true,
@@ -51,6 +35,5 @@ class ProjectClass {
 
   id: string;
 }
-
 const Project = getModelForClass(ProjectClass);
 export { Project, ProjectClass };
