@@ -73,8 +73,6 @@ export const skillsData = [
   "Tailwind",
   "MongoDB",
   "Redux",
-  "GraphQL",
-  "Apollo",
   "Express",
   "PostgreSQL",
   "MySQL",
